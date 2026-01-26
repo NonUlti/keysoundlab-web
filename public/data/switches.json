@@ -1,0 +1,54 @@
+[
+  {
+    "id": "cherry-mx-red",
+    "name": "Cherry MX Red",
+    "manufacturer": "Cherry",
+    "type": "linear",
+    "actuationForce": 45,
+    "bottomOutForce": 60,
+    "preTravel": 2.0,
+    "totalTravel": 4.0,
+    "soundFiles": ["/sounds/cherry-mx-red.wav"],
+    "description": "부드럽고 일관된 선형 스위치. 게임 및 타이핑에 적합.",
+    "imageUrl": "/images/switches/cherry-mx-red.jpg"
+  },
+  {
+    "id": "cherry-mx-blue",
+    "name": "Cherry MX Blue",
+    "manufacturer": "Cherry",
+    "type": "clicky",
+    "actuationForce": 50,
+    "bottomOutForce": 60,
+    "preTravel": 2.2,
+    "totalTravel": 4.0,
+    "soundFiles": ["/sounds/cherry-mx-blue.wav"],
+    "description": "촉각적이고 청각적인 클릭 피드백. 타이핑에 최적화.",
+    "imageUrl": "/images/switches/cherry-mx-blue.jpg"
+  },
+  {
+    "id": "cherry-mx-brown",
+    "name": "Cherry MX Brown",
+    "manufacturer": "Cherry",
+    "type": "tactile",
+    "actuationForce": 45,
+    "bottomOutForce": 55,
+    "preTravel": 2.0,
+    "totalTravel": 4.0,
+    "soundFiles": ["/sounds/cherry-mx-brown.wav"],
+    "description": "적당한 촉각 피드백. 타이핑과 게임의 균형.",
+    "imageUrl": "/images/switches/cherry-mx-brown.jpg"
+  },
+  {
+    "id": "gateron-yellow",
+    "name": "Gateron Yellow",
+    "manufacturer": "Gateron",
+    "type": "linear",
+    "actuationForce": 50,
+    "bottomOutForce": 60,
+    "preTravel": 2.0,
+    "totalTravel": 4.0,
+    "soundFiles": ["/sounds/cherry-mx-red.wav"],
+    "description": "매우 부드러운 선형 스위치. 가성비가 뛰어남. (임시로 Cherry MX Red 사운드 사용)",
+    "imageUrl": "/images/switches/gateron-yellow.jpg"
+  }
+]
