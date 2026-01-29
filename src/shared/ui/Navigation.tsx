@@ -1,22 +1,24 @@
 'use client';
 
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { useTranslations } from 'next-intl';
+import { NAMESPACES } from '@/i18n/constants';
+import { Link, usePathname } from '@/i18n/routing';
 
 interface NavItem {
   href: string;
-  label: string;
+  labelKey: string;
 }
 
 const navItems: NavItem[] = [
-  { href: '/', label: '메인' },
-  { href: '/sound-test', label: '사운드 테스트' },
+  { href: '/', labelKey: 'nav.home' },
+  { href: '/sound-test', labelKey: 'nav.soundTest' },
 ];
 
 /**
  * GNB 네비게이션 컴포넌트
  */
 export function Navigation() {
+  const t = useTranslations(NAMESPACES.COMMON);
   const pathname = usePathname();
 
   return (
@@ -30,7 +32,7 @@ export function Navigation() {
                 href={item.href}
                 className={`gnb-link ${isActive ? 'active' : ''}`}
               >
-                {item.label}
+                {t(item.labelKey)}
               </Link>
             </li>
           );

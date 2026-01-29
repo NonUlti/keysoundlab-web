@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { Navigation } from './Navigation';
+import { LanguageSwitcher } from './LanguageSwitcher';
 
 interface HeaderProps {
   rightContent?: React.ReactNode;
@@ -19,11 +20,11 @@ export function Header({ rightContent }: HeaderProps) {
         </Link>
         <Navigation />
       </div>
-      {rightContent && (
-        <div className="header-right">
-          {rightContent}
-        </div>
-      )}
+      
+      <div className="header-right">
+        {rightContent}
+        <LanguageSwitcher />
+      </div>
     </header>
   );
 }
