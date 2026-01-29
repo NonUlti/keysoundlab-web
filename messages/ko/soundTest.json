@@ -1,0 +1,21 @@
+{
+  "audio": {
+    "start": "오디오 시작"
+  },
+  "status": {
+    "selected": "선택됨:",
+    "loading": "로딩중...",
+    "soundError": "사운드 로딩 실패:",
+    "selectSwitch": "왼쪽에서 스위치를 선택하세요"
+  },
+  "switch": {
+    "loading": "스위치 목록 로딩 중...",
+    "error": "오류:",
+    "noResults": "검색 결과가 없습니다."
+  },
+  "filter": {
+    "search": "스위치 검색...",
+    "allTypes": "모든 타입",
+    "allManufacturers": "모든 제조사"
+  }
+}

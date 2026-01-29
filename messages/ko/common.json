@@ -1,0 +1,16 @@
+{
+  "metadata": {
+    "title": "KeySoundLab",
+    "description": "키보드 스위치 사운드 테스트 웹 애플리케이션"
+  },
+  "header": {
+    "logo": "KeySoundLab"
+  },
+  "nav": {
+    "home": "메인",
+    "soundTest": "사운드 테스트"
+  },
+  "footer": {
+    "copyright": "KeySoundLab - 키보드 스위치 사운드 테스트"
+  }
+}

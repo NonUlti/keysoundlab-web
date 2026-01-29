@@ -1,0 +1,21 @@
+{
+  "audio": {
+    "start": "Start Audio"
+  },
+  "status": {
+    "selected": "Selected:",
+    "loading": "Loading...",
+    "soundError": "Sound loading failed:",
+    "selectSwitch": "Select a switch from the left"
+  },
+  "switch": {
+    "loading": "Loading switch list...",
+    "error": "Error:",
+    "noResults": "No results found."
+  },
+  "filter": {
+    "search": "Search switches...",
+    "allTypes": "All Types",
+    "allManufacturers": "All Manufacturers"
+  }
+}

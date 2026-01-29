@@ -1,0 +1,41 @@
+{
+  "hero": {
+    "title": "KeySoundLab",
+    "subtitle": "Test keyboard switch sounds in real-time",
+    "cta": "Start Sound Test"
+  },
+  "features": {
+    "title": "Key Features",
+    "realtime": {
+      "title": "Real-time Sound",
+      "description": "Hear your selected switch sound instantly when you type on your physical keyboard."
+    },
+    "switches": {
+      "title": "Various Switches",
+      "description": "Supports various mechanical switch sounds including Cherry MX, Gateron, and more."
+    },
+    "visual": {
+      "title": "Visual Feedback",
+      "description": "See which keys you're pressing on an 87-key TKL layout."
+    },
+    "keyTypes": {
+      "title": "Key Type Sounds",
+      "description": "Stabilizer keys like spacebar and enter have distinct sounds."
+    }
+  },
+  "howItWorks": {
+    "title": "How to Use",
+    "step1": {
+      "title": "Select Switch",
+      "description": "Choose the switch you want to test from the sidebar."
+    },
+    "step2": {
+      "title": "Start Audio",
+      "description": "Click the \"Start Audio\" button to activate sound."
+    },
+    "step3": {
+      "title": "Start Typing",
+      "description": "Type on your keyboard to hear the selected switch sound."
+    }
+  }
+}

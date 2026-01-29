@@ -1,0 +1,16 @@
+{
+  "metadata": {
+    "title": "KeySoundLab",
+    "description": "Keyboard switch sound testing web application"
+  },
+  "header": {
+    "logo": "KeySoundLab"
+  },
+  "nav": {
+    "home": "Home",
+    "soundTest": "Sound Test"
+  },
+  "footer": {
+    "copyright": "KeySoundLab - Keyboard Switch Sound Test"
+  }
+}
