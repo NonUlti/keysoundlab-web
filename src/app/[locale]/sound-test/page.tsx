@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useCallback, useMemo } from 'react';
+import { useTranslations } from 'next-intl';
 import { Header } from '@/shared/ui';
 import { SwitchSelector, useSwitchSelection } from '@/features/switch-selector';
 import { KeyboardDisplay, useKeyboardVisualization } from '@/features/keyboard-display';
@@ -10,6 +11,7 @@ import { SwitchRepository } from '@/domain/switch/repository/SwitchRepository';
 import { LocalSwitchAdapter } from '@/domain/switch/repository/adapters/LocalSwitchAdapter';
 import { appConfig } from '@/config/app.config';
 import { createLogger } from '@/shared/utils/logger';
+import { NAMESPACES } from '@/i18n/constants';
 
 const logger = createLogger('SoundTestPage');
 
@@ -17,6 +19,8 @@ const logger = createLogger('SoundTestPage');
  * 사운드 테스트 페이지
  */
 export default function SoundTestPage() {
+  const t = useTranslations(NAMESPACES.SOUND_TEST);
+
   // 스위치 리포지토리 초기화
   const [repository] = useState(
     () => new SwitchRepository(new LocalSwitchAdapter(appConfig.dataSource.switchesUrl))
@@ -134,28 +138,28 @@ export default function SoundTestPage() {
           <div className="sound-test-status">
             {!isReady && (
               <button onClick={handleInitAudio} className="init-audio-btn">
-                오디오 시작
+                {t('audio.start')}
               </button>
             )}
 
             {selectedSwitch && (
               <div className="current-switch">
-                <span className="current-switch-label">선택됨:</span>
+                <span className="current-switch-label">{t('status.selected')}</span>
                 <span className="current-switch-name">{selectedSwitch.name}</span>
-                {soundLoading && <span className="loading-indicator">로딩중...</span>}
+                {soundLoading && <span className="loading-indicator">{t('status.loading')}</span>}
               </div>
             )}
 
             {soundError && (
               <div className="error-message">
-                사운드 로딩 실패: {soundError.message}
+                {t('status.soundError')} {soundError.message}
               </div>
             )}
           </div>
 
           {!selectedSwitch && !soundLoading && !soundError && (
             <div className="empty-state">
-              왼쪽에서 스위치를 선택하세요
+              {t('status.selectSwitch')}
             </div>
           )}
 
