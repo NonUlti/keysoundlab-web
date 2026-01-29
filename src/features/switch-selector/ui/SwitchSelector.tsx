@@ -1,6 +1,8 @@
 'use client';
 
 import { useState } from 'react';
+import { useTranslations } from 'next-intl';
+import { NAMESPACES } from '@/i18n/constants';
 import type { Switch, SwitchFilter } from '@/domain/switch/types';
 import type { SwitchRepository } from '@/domain/switch/repository/SwitchRepository';
 import { SwitchCard } from './SwitchCard';
@@ -21,15 +23,16 @@ export function SwitchSelector({
   selectedSwitch,
   onSelectSwitch,
 }: SwitchSelectorProps) {
+  const t = useTranslations(NAMESPACES.SOUND_TEST);
   const [filter, setFilter] = useState<SwitchFilter>({});
   const { switches, loading, error } = useSwitchList(repository, filter);
 
   if (loading) {
-    return <div className="loading">스위치 목록 로딩 중...</div>;
+    return <div className="loading">{t('switch.loading')}</div>;
   }
 
   if (error) {
-    return <div className="error">오류: {error.message}</div>;
+    return <div className="error">{t('switch.error')} {error.message}</div>;
   }
 
   return (
@@ -38,7 +41,7 @@ export function SwitchSelector({
 
       <div className="switch-list">
         {switches.length === 0 ? (
-          <p>검색 결과가 없습니다.</p>
+          <p>{t('switch.noResults')}</p>
         ) : (
           switches.map((switchItem) => (
             <SwitchCard
