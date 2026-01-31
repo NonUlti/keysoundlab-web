@@ -45,6 +45,7 @@ export const createKeyboardListener = (): KeyboardListener => {
         key: e.key,
         timestamp: Date.now(),
         repeat: e.repeat,
+        metaKey: e.metaKey,
       });
     }
   };
@@ -62,6 +63,7 @@ export const createKeyboardListener = (): KeyboardListener => {
         key: e.key,
         timestamp: Date.now(),
         repeat: false,
+        metaKey: e.metaKey,
       });
     }
   };

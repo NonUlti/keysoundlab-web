@@ -6,6 +6,7 @@ export interface KeyEvent {
   key: string;
   timestamp: number;
   repeat: boolean;
+  metaKey: boolean;
 }
 
 /**

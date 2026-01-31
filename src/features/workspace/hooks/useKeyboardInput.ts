@@ -35,6 +35,9 @@ export function useKeyboardInput({
     const listener = createKeyboardListener();
     const stateTracker = createKeyStateTracker();
     const mapper = createKeyboardMapper();
+    // macOS에서 Meta 키를 누르고 있으면 다른 키의 keyup이 발생하지 않음
+    // Meta와 함께 눌린 키를 추적하여 Meta keyup 시 해제
+    const metaPressedKeys = new Set<string>();
 
     if (currentSwitch) {
       mapper.setCurrentSwitch(currentSwitch);
@@ -47,11 +50,29 @@ export function useKeyboardInput({
       const wasPressed = stateTracker.press(event.code);
       if (!wasPressed) return;
 
+      // Meta가 눌린 상태에서 함께 눌린 키 추적 (Meta 자체는 제외)
+      if (event.metaKey && !event.code.startsWith('Meta')) {
+        metaPressedKeys.add(event.code);
+      }
+
       const soundId = mapper.mapKeyToSound(event.code);
       onKeyPressRef.current?.(event.code, soundId);
     });
 
     listener.onKeyUp((event: KeyEvent) => {
+      // Meta keyup 시: Meta와 함께 눌렸던 키들의 keyup이 누락되었으므로 해제
+      if (event.code.startsWith('Meta')) {
+        for (const code of metaPressedKeys) {
+          const wasReleased = stateTracker.release(code);
+          if (wasReleased) {
+            onKeyReleaseRef.current?.(code);
+          }
+        }
+        metaPressedKeys.clear();
+      }
+
+      metaPressedKeys.delete(event.code);
+
       const wasReleased = stateTracker.release(event.code);
       if (!wasReleased) return;
 
