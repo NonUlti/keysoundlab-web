@@ -48,14 +48,3 @@ export function getKeyType(keyCode: string): KeyType {
   return 'default';
 }
 
-/**
- * 키 타입별 설명
- */
-export const KEY_TYPE_DESCRIPTIONS: Record<KeyType, string> = {
-  default: '일반 키 (1u)',
-  spacebar: '스페이스바 (6.25u, 큰 스태빌라이저)',
-  enter: '엔터 (2.25u, 스태빌라이저)',
-  shift: '시프트 (2.25u/2.75u, 스태빌라이저)',
-  backspace: '백스페이스 (2u, 스태빌라이저)',
-  stabilizer: '기타 스태빌라이저 키',
-};

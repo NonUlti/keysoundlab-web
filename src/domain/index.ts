@@ -4,7 +4,6 @@ export {
   createKeyStateTracker,
   createKeyboardMapper,
   getKeyType,
-  KEY_TYPE_DESCRIPTIONS,
 } from './keyboard';
 
 export type {
