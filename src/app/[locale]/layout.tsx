@@ -16,8 +16,7 @@ export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
 }
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { locale } = await params;
+export async function generateMetadata(): Promise<Metadata> {
   const messages = await getMessages();
   const common = messages[NAMESPACES.COMMON] as Record<string, Record<string, string>>;
 
