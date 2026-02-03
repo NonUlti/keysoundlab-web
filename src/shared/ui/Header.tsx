@@ -1,6 +1,6 @@
 'use client';
 
-import Link from 'next/link';
+import { Link } from '@/i18n/routing';
 import { Navigation } from './Navigation';
 import { LanguageSwitcher } from './LanguageSwitcher';
 import ThemeSwitcher from './ThemeSwitcher';
