@@ -17,5 +17,10 @@
     "search": "스위치 검색...",
     "allTypes": "모든 타입",
     "allManufacturers": "모든 제조사"
+  },
+  "volume": {
+    "label": "볼륨",
+    "mute": "음소거",
+    "unmute": "음소거 해제"
   }
 }

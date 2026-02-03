@@ -1,6 +1,8 @@
 'use client';
 
 import { useState } from 'react';
+import { useTranslations } from 'next-intl';
+import { NAMESPACES } from '@/i18n/constants';
 
 interface SoundControlsProps {
   volume: number;
@@ -18,6 +20,7 @@ export function SoundControls({
   onMute,
   isMuted,
 }: SoundControlsProps) {
+  const t = useTranslations(NAMESPACES.SOUND_TEST);
   const [localVolume, setLocalVolume] = useState(volume);
 
   const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -29,7 +32,7 @@ export function SoundControls({
   return (
     <div className="sound-controls">
       <div className="volume-control">
-        <label htmlFor="volume">볼륨</label>
+        <label htmlFor="volume">{t('volume.label')}</label>
         <input
           id="volume"
           type="range"
@@ -44,7 +47,7 @@ export function SoundControls({
 
       {onMute && (
         <button onClick={onMute} className="mute-button">
-          {isMuted ? '음소거 해제' : '음소거'}
+          {isMuted ? t('volume.unmute') : t('volume.mute')}
         </button>
       )}
     </div>

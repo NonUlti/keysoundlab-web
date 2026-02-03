@@ -17,5 +17,10 @@
     "search": "Search switches...",
     "allTypes": "All Types",
     "allManufacturers": "All Manufacturers"
+  },
+  "volume": {
+    "label": "Volume",
+    "mute": "Mute",
+    "unmute": "Unmute"
   }
 }
