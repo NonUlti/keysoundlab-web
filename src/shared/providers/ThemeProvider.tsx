@@ -37,11 +37,19 @@ export function ThemeProvider({
   // Initialize theme from local storage or default
   useEffect(() => {
     const savedTheme = localStorage.getItem(storageKey) as Theme;
+    const themeToApply = savedTheme || defaultTheme;
     if (savedTheme) {
       setTheme(savedTheme);
     }
+    // resolvedTheme을 isMounted 전에 결정하여 다크모드 깜빡임 방지
+    if (themeToApply === 'system') {
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      setResolvedTheme(prefersDark ? 'dark' : 'light');
+    } else {
+      setResolvedTheme(themeToApply as 'light' | 'dark');
+    }
     setIsMounted(true);
-  }, [storageKey]);
+  }, [storageKey, defaultTheme]);
 
   // Handle system theme changes and update resolvedTheme
   useEffect(() => {
@@ -71,19 +79,19 @@ export function ThemeProvider({
     const root = window.document.documentElement;
     root.classList.remove('light', 'dark');
 
-    if (resolvedTheme === 'dark') {
-      root.setAttribute('data-theme', 'dark');
-    } else {
-      root.removeAttribute('data-theme');
-    }
-    
+    root.setAttribute('data-theme', resolvedTheme);
     localStorage.setItem(storageKey, theme);
   }, [theme, resolvedTheme, storageKey, isMounted]);
 
   const value = {
     theme,
-    setTheme: (theme: Theme) => {
-      setTheme(theme);
+    setTheme: (newTheme: Theme) => {
+      // 사용자가 직접 테마를 전환할 때만 transition 적용
+      document.body.classList.add('theme-transition');
+      setTheme(newTheme);
+      window.setTimeout(() => {
+        document.body.classList.remove('theme-transition');
+      }, 300);
     },
     resolvedTheme,
   };

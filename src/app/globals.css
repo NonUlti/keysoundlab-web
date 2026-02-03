@@ -32,11 +32,17 @@
   --error-rgb: 244, 67, 54; /* Red-500 */
 }
 
+html, body {
+  background-color: var(--bg-primary);
+}
+
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  background-color: var(--bg-primary);
   color: var(--text-primary);
   line-height: 1.6;
+}
+
+body.theme-transition {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 

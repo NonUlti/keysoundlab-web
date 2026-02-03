@@ -47,11 +47,18 @@ export default async function LocaleLayout({ children, params }: Props) {
                   var storageKey = 'ui-theme';
                   var theme = localStorage.getItem(storageKey);
                   var supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
-                  if (theme === 'dark' || ((!theme || theme === 'system') && supportDarkMode)) {
-                    document.documentElement.setAttribute('data-theme', 'dark');
-                  } else {
-                    document.documentElement.removeAttribute('data-theme');
-                  }
+                  var isDark = theme === 'dark' || ((!theme || theme === 'system') && supportDarkMode);
+                  var resolved = isDark ? 'dark' : 'light';
+                  document.documentElement.setAttribute('data-theme', resolved);
+                  var last = resolved;
+                  new MutationObserver(function(ms) {
+                    for (var i = 0; i < ms.length; i++) {
+                      if (ms[i].attributeName === 'data-theme') {
+                        var c = document.documentElement.getAttribute('data-theme');
+                        if (c) { last = c; } else { document.documentElement.setAttribute('data-theme', last); }
+                      }
+                    }
+                  }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
                 } catch (e) {}
               })();
             `,
