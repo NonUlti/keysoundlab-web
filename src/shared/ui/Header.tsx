@@ -14,15 +14,15 @@ interface HeaderProps {
  */
 export function Header({ rightContent }: HeaderProps) {
   return (
-    <header className="site-header">
-      <div className="header-left">
-        <Link href="/" className="logo">
+    <header className="flex justify-between items-center px-8 h-16 bg-secondary border-b border-border sticky top-0 z-[100]">
+      <div className="flex items-center gap-8">
+        <Link href="/" className="text-2xl font-bold text-text-primary no-underline transition-colors hover:text-accent">
           KeySoundLab
         </Link>
         <Navigation />
       </div>
-      
-      <div className="header-right">
+
+      <div className="flex items-center gap-4">
         {rightContent}
         <ThemeSwitcher />
         <LanguageSwitcher />

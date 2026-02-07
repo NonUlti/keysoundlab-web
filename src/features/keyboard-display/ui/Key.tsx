@@ -12,19 +12,21 @@ interface KeyProps {
  * width는 u 단위 (1u = 기본 키 크기)
  */
 export function Key({ code, label, isPressed, width = 1 }: KeyProps) {
-  // CSS 변수 --key-unit을 사용하여 키 크기 계산
-  // width * unit + (width - 1) * gap 으로 갭 포함 크기 계산
   const style = {
     '--key-width': width,
   } as React.CSSProperties;
 
   return (
     <div
-      className={`key ${isPressed ? 'pressed' : ''}`}
+      className={`key bg-primary border border-border rounded flex items-center justify-center text-[11px] font-medium transition-all duration-[50ms] ease-in-out select-none cursor-pointer text-text-secondary hover:border-[rgba(var(--accent-rgb),0.5)] ${
+        isPressed
+          ? '!bg-accent translate-y-px shadow-[0_0_12px_rgba(var(--accent-rgb),0.5)] !border-accent !text-white'
+          : ''
+      }`}
       data-key-code={code}
       style={style}
     >
-      <span className="key-label">{label}</span>
+      <span>{label}</span>
     </div>
   );
 }

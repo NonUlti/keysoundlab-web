@@ -13,7 +13,7 @@ export default function ThemeSwitcher() {
   }, []);
 
   if (!mounted) {
-    return null; 
+    return null;
   }
 
   const toggleTheme = () => {
@@ -27,7 +27,7 @@ export default function ThemeSwitcher() {
   return (
     <button
       onClick={toggleTheme}
-      className="theme-switcher-btn"
+      className="p-2 rounded-lg bg-transparent border-none cursor-pointer transition-colors text-text-secondary flex items-center justify-center hover:text-text-primary hover:bg-black/5 dark:hover:bg-white/10"
       aria-label="Toggle theme"
     >
       {resolvedTheme === 'dark' ? (
@@ -41,7 +41,7 @@ export default function ThemeSwitcher() {
           strokeWidth="2"
           strokeLinecap="round"
           strokeLinejoin="round"
-          className="theme-icon-sun"
+          className="text-yellow-400"
         >
           <circle cx="12" cy="12" r="4" />
           <path d="M12 2v2" />
@@ -64,7 +64,7 @@ export default function ThemeSwitcher() {
           strokeWidth="2"
           strokeLinecap="round"
           strokeLinejoin="round"
-          className="theme-icon-moon"
+          className="text-slate-700 dark:text-slate-400"
         >
           <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
         </svg>

@@ -22,15 +22,19 @@ export function Navigation() {
   const pathname = usePathname();
 
   return (
-    <nav className="gnb-nav">
-      <ul className="gnb-list">
+    <nav className="flex items-center">
+      <ul className="flex list-none gap-2">
         {navItems.map((item) => {
           const isActive = pathname === item.href;
           return (
-            <li key={item.href} className="gnb-item">
+            <li key={item.href} className="relative">
               <Link
                 href={item.href}
-                className={`gnb-link ${isActive ? 'active' : ''}`}
+                className={`block py-2 px-4 no-underline font-medium rounded-md transition-all ${
+                  isActive
+                    ? 'text-accent bg-[rgba(var(--accent-rgb),0.1)] after:content-[\'\'] after:absolute after:-bottom-2 after:left-1/2 after:-translate-x-1/2 after:w-6 after:h-[3px] after:bg-accent after:rounded-sm'
+                    : 'text-text-secondary hover:text-text-primary hover:bg-white/5'
+                }`}
               >
                 {t(item.labelKey)}
               </Link>

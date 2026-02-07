@@ -30,8 +30,8 @@ export function SoundControls({
   };
 
   return (
-    <div className="sound-controls">
-      <div className="volume-control">
+    <div className="flex gap-4 items-center">
+      <div className="flex gap-2 items-center">
         <label htmlFor="volume">{t('volume.label')}</label>
         <input
           id="volume"
@@ -41,12 +41,16 @@ export function SoundControls({
           step="0.01"
           value={localVolume}
           onChange={handleVolumeChange}
+          className="w-[150px]"
         />
-        <span className="volume-value">{Math.round(localVolume * 100)}%</span>
+        <span className="min-w-12 text-right">{Math.round(localVolume * 100)}%</span>
       </div>
 
       {onMute && (
-        <button onClick={onMute} className="mute-button">
+        <button
+          onClick={onMute}
+          className="py-2 px-4 bg-accent text-white border-none rounded cursor-pointer transition-opacity hover:opacity-80"
+        >
           {isMuted ? t('volume.unmute') : t('volume.mute')}
         </button>
       )}

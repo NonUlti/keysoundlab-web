@@ -28,18 +28,18 @@ export function SwitchSelector({
   const { switches, loading, error } = useSwitchList(repository, filter);
 
   if (loading) {
-    return <div className="loading">{t('switch.loading')}</div>;
+    return <div>{t('switch.loading')}</div>;
   }
 
   if (error) {
-    return <div className="error">{t('switch.error')} {error.message}</div>;
+    return <div>{t('switch.error')} {error.message}</div>;
   }
 
   return (
-    <div className="switch-selector">
+    <div className="flex flex-col gap-2">
       <SwitchFilters onFilterChange={setFilter} />
 
-      <div className="switch-list">
+      <div className="flex flex-col gap-1.5">
         {switches.length === 0 ? (
           <p>{t('switch.noResults')}</p>
         ) : (

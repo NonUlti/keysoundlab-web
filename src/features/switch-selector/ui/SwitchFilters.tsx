@@ -29,7 +29,7 @@ export function SwitchFilters({ onFilterChange, manufacturers = [] }: SwitchFilt
   };
 
   return (
-    <div className="switch-filters">
+    <div className="flex flex-col gap-2 mb-3">
       <input
         type="text"
         placeholder={t('filter.search')}
@@ -38,6 +38,7 @@ export function SwitchFilters({ onFilterChange, manufacturers = [] }: SwitchFilt
           setSearchQuery(e.target.value);
           handleFilterChange();
         }}
+        className="w-full py-1.5 px-2 bg-primary border border-border rounded text-text-primary text-xs placeholder:text-text-secondary focus:outline-none focus:border-accent"
       />
 
       <select
@@ -46,6 +47,7 @@ export function SwitchFilters({ onFilterChange, manufacturers = [] }: SwitchFilt
           setSelectedType(e.target.value as SwitchType || undefined);
           handleFilterChange();
         }}
+        className="w-full py-1.5 px-2 bg-primary border border-border rounded text-text-primary text-xs cursor-pointer focus:outline-none focus:border-accent"
       >
         <option value="">{t('filter.allTypes')}</option>
         <option value="linear">Linear</option>
@@ -59,6 +61,7 @@ export function SwitchFilters({ onFilterChange, manufacturers = [] }: SwitchFilt
           setSelectedManufacturer(e.target.value || undefined);
           handleFilterChange();
         }}
+        className="w-full py-1.5 px-2 bg-primary border border-border rounded text-text-primary text-xs cursor-pointer focus:outline-none focus:border-accent"
       >
         <option value="">{t('filter.allManufacturers')}</option>
         {manufacturers.map((manufacturer) => (

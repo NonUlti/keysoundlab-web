@@ -14,32 +14,32 @@ export function KeyboardDisplay({ pressedKeys }: KeyboardDisplayProps) {
   const isPressed = (code: string) => pressedKeys.includes(code);
 
   return (
-    <div className="keyboard-display">
+    <div className="keyboard-display mx-auto p-4 bg-secondary rounded-xl border border-border w-fit">
       {/* Function 키 행 */}
-      <div className="keyboard-section fn-row">
-        <div className="keyboard-row">
-          <div className="fn-block">
+      <div className="flex flex-col gap-[var(--row-gap)]">
+        <div className="flex items-center">
+          <div className="flex gap-[var(--key-gap)]">
             <Key code="Escape" label="Esc" width={1} isPressed={isPressed('Escape')} />
           </div>
-          <div className="fn-block fn-group">
+          <div className="fn-group flex gap-[var(--key-gap)]">
             <Key code="F1" label="F1" width={1} isPressed={isPressed('F1')} />
             <Key code="F2" label="F2" width={1} isPressed={isPressed('F2')} />
             <Key code="F3" label="F3" width={1} isPressed={isPressed('F3')} />
             <Key code="F4" label="F4" width={1} isPressed={isPressed('F4')} />
           </div>
-          <div className="fn-block fn-group">
+          <div className="fn-group flex gap-[var(--key-gap)]">
             <Key code="F5" label="F5" width={1} isPressed={isPressed('F5')} />
             <Key code="F6" label="F6" width={1} isPressed={isPressed('F6')} />
             <Key code="F7" label="F7" width={1} isPressed={isPressed('F7')} />
             <Key code="F8" label="F8" width={1} isPressed={isPressed('F8')} />
           </div>
-          <div className="fn-block fn-group">
+          <div className="fn-group flex gap-[var(--key-gap)]">
             <Key code="F9" label="F9" width={1} isPressed={isPressed('F9')} />
             <Key code="F10" label="F10" width={1} isPressed={isPressed('F10')} />
             <Key code="F11" label="F11" width={1} isPressed={isPressed('F11')} />
             <Key code="F12" label="F12" width={1} isPressed={isPressed('F12')} />
           </div>
-          <div className="nav-block">
+          <div className="flex gap-[var(--key-gap)] ml-[var(--section-gap)]">
             <Key code="PrintScreen" label="PrtSc" width={1} isPressed={isPressed('PrintScreen')} />
             <Key code="ScrollLock" label="ScrLk" width={1} isPressed={isPressed('ScrollLock')} />
             <Key code="Pause" label="Pause" width={1} isPressed={isPressed('Pause')} />
@@ -50,10 +50,10 @@ export function KeyboardDisplay({ pressedKeys }: KeyboardDisplayProps) {
       <div className="keyboard-gap-vertical" />
 
       {/* 메인 키보드 섹션 */}
-      <div className="keyboard-section">
+      <div className="flex flex-col gap-[var(--row-gap)]">
         {/* 숫자 행 */}
-        <div className="keyboard-row">
-          <div className="main-block">
+        <div className="flex items-center">
+          <div className="flex gap-[var(--key-gap)]">
             <Key code="Backquote" label="`" width={1} isPressed={isPressed('Backquote')} />
             <Key code="Digit1" label="1" width={1} isPressed={isPressed('Digit1')} />
             <Key code="Digit2" label="2" width={1} isPressed={isPressed('Digit2')} />
@@ -69,7 +69,7 @@ export function KeyboardDisplay({ pressedKeys }: KeyboardDisplayProps) {
             <Key code="Equal" label="=" width={1} isPressed={isPressed('Equal')} />
             <Key code="Backspace" label="Back" width={2} isPressed={isPressed('Backspace')} />
           </div>
-          <div className="nav-block">
+          <div className="flex gap-[var(--key-gap)] ml-[var(--section-gap)]">
             <Key code="Insert" label="Ins" width={1} isPressed={isPressed('Insert')} />
             <Key code="Home" label="Home" width={1} isPressed={isPressed('Home')} />
             <Key code="PageUp" label="PgUp" width={1} isPressed={isPressed('PageUp')} />
@@ -77,8 +77,8 @@ export function KeyboardDisplay({ pressedKeys }: KeyboardDisplayProps) {
         </div>
 
         {/* Tab 행 */}
-        <div className="keyboard-row">
-          <div className="main-block">
+        <div className="flex items-center">
+          <div className="flex gap-[var(--key-gap)]">
             <Key code="Tab" label="Tab" width={1.5} isPressed={isPressed('Tab')} />
             <Key code="KeyQ" label="Q" width={1} isPressed={isPressed('KeyQ')} />
             <Key code="KeyW" label="W" width={1} isPressed={isPressed('KeyW')} />
@@ -94,7 +94,7 @@ export function KeyboardDisplay({ pressedKeys }: KeyboardDisplayProps) {
             <Key code="BracketRight" label="]" width={1} isPressed={isPressed('BracketRight')} />
             <Key code="Backslash" label="\" width={1.5} isPressed={isPressed('Backslash')} />
           </div>
-          <div className="nav-block">
+          <div className="flex gap-[var(--key-gap)] ml-[var(--section-gap)]">
             <Key code="Delete" label="Del" width={1} isPressed={isPressed('Delete')} />
             <Key code="End" label="End" width={1} isPressed={isPressed('End')} />
             <Key code="PageDown" label="PgDn" width={1} isPressed={isPressed('PageDown')} />
@@ -102,8 +102,8 @@ export function KeyboardDisplay({ pressedKeys }: KeyboardDisplayProps) {
         </div>
 
         {/* Caps 행 */}
-        <div className="keyboard-row">
-          <div className="main-block">
+        <div className="flex items-center">
+          <div className="flex gap-[var(--key-gap)]">
             <Key code="CapsLock" label="Caps" width={1.75} isPressed={isPressed('CapsLock')} />
             <Key code="KeyA" label="A" width={1} isPressed={isPressed('KeyA')} />
             <Key code="KeyS" label="S" width={1} isPressed={isPressed('KeyS')} />
@@ -118,12 +118,12 @@ export function KeyboardDisplay({ pressedKeys }: KeyboardDisplayProps) {
             <Key code="Quote" label="'" width={1} isPressed={isPressed('Quote')} />
             <Key code="Enter" label="Enter" width={2.25} isPressed={isPressed('Enter')} />
           </div>
-          <div className="nav-block nav-empty" />
+          <div className="nav-empty" />
         </div>
 
         {/* Shift 행 */}
-        <div className="keyboard-row">
-          <div className="main-block">
+        <div className="flex items-center">
+          <div className="flex gap-[var(--key-gap)]">
             <Key code="ShiftLeft" label="Shift" width={2.25} isPressed={isPressed('ShiftLeft')} />
             <Key code="KeyZ" label="Z" width={1} isPressed={isPressed('KeyZ')} />
             <Key code="KeyX" label="X" width={1} isPressed={isPressed('KeyX')} />
@@ -137,7 +137,7 @@ export function KeyboardDisplay({ pressedKeys }: KeyboardDisplayProps) {
             <Key code="Slash" label="/" width={1} isPressed={isPressed('Slash')} />
             <Key code="ShiftRight" label="Shift" width={2.75} isPressed={isPressed('ShiftRight')} />
           </div>
-          <div className="nav-block arrow-block">
+          <div className="flex gap-[var(--key-gap)] ml-[var(--section-gap)]">
             <div className="arrow-spacer" />
             <Key code="ArrowUp" label="↑" width={1} isPressed={isPressed('ArrowUp')} />
             <div className="arrow-spacer" />
@@ -145,8 +145,8 @@ export function KeyboardDisplay({ pressedKeys }: KeyboardDisplayProps) {
         </div>
 
         {/* Ctrl 행 */}
-        <div className="keyboard-row">
-          <div className="main-block">
+        <div className="flex items-center">
+          <div className="flex gap-[var(--key-gap)]">
             <Key code="ControlLeft" label="Ctrl" width={1.25} isPressed={isPressed('ControlLeft')} />
             <Key code="MetaLeft" label="Win" width={1.25} isPressed={isPressed('MetaLeft')} />
             <Key code="AltLeft" label="Alt" width={1.25} isPressed={isPressed('AltLeft')} />
@@ -156,7 +156,7 @@ export function KeyboardDisplay({ pressedKeys }: KeyboardDisplayProps) {
             <Key code="ContextMenu" label="Fn" width={1.25} isPressed={isPressed('ContextMenu')} />
             <Key code="ControlRight" label="Ctrl" width={1.25} isPressed={isPressed('ControlRight')} />
           </div>
-          <div className="nav-block">
+          <div className="flex gap-[var(--key-gap)] ml-[var(--section-gap)]">
             <Key code="ArrowLeft" label="←" width={1} isPressed={isPressed('ArrowLeft')} />
             <Key code="ArrowDown" label="↓" width={1} isPressed={isPressed('ArrowDown')} />
             <Key code="ArrowRight" label="→" width={1} isPressed={isPressed('ArrowRight')} />

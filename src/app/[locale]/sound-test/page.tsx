@@ -115,7 +115,7 @@ export default function SoundTestPage() {
   };
 
   return (
-    <div className="sound-test-page">
+    <div className="min-h-screen flex flex-col">
       <Header
         rightContent={
           <SoundControls
@@ -125,8 +125,8 @@ export default function SoundTestPage() {
         }
       />
 
-      <div className="sound-test-content">
-        <aside className="sound-test-sidebar">
+      <div className="flex-1 flex overflow-hidden">
+        <aside className="w-60 bg-secondary border-r border-border overflow-y-auto p-3 shrink-0">
           <SwitchSelector
             repository={repository}
             selectedSwitch={selectedSwitch}
@@ -134,31 +134,34 @@ export default function SoundTestPage() {
           />
         </aside>
 
-        <main className="sound-test-main">
-          <div className="sound-test-status">
+        <main className="flex-1 py-6 px-8 overflow-y-auto flex flex-col">
+          <div className="flex items-center gap-4 mb-4 flex-wrap">
             {!isReady && (
-              <button onClick={handleInitAudio} className="init-audio-btn">
+              <button
+                onClick={handleInitAudio}
+                className="py-2 px-4 text-sm bg-accent text-white border-none rounded cursor-pointer transition-opacity hover:opacity-80"
+              >
                 {t('audio.start')}
               </button>
             )}
 
             {selectedSwitch && (
-              <div className="current-switch">
-                <span className="current-switch-label">{t('status.selected')}</span>
-                <span className="current-switch-name">{selectedSwitch.name}</span>
-                {soundLoading && <span className="loading-indicator">{t('status.loading')}</span>}
+              <div className="flex items-center gap-2 py-2 px-4 bg-secondary rounded-md border border-border">
+                <span className="text-xs text-text-secondary">{t('status.selected')}</span>
+                <span className="text-sm font-semibold text-accent">{selectedSwitch.name}</span>
+                {soundLoading && <span className="text-xs text-text-secondary animate-[pulse_1.5s_infinite]">{t('status.loading')}</span>}
               </div>
             )}
 
             {soundError && (
-              <div className="error-message">
+              <div className="py-2 px-4 bg-[rgba(var(--error-rgb),0.1)] border border-[rgb(var(--error-rgb))] rounded-md text-[rgb(var(--error-rgb))] text-[13px]">
                 {t('status.soundError')} {soundError.message}
               </div>
             )}
           </div>
 
           {!selectedSwitch && !soundLoading && !soundError && (
-            <div className="empty-state">
+            <div className="flex items-center justify-center p-8 text-text-secondary text-sm bg-secondary rounded-lg border border-dashed border-border mb-4">
               {t('status.selectSwitch')}
             </div>
           )}

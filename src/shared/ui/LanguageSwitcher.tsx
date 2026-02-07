@@ -8,31 +8,19 @@ export function LanguageSwitcher() {
   const pathname = usePathname();
 
   return (
-    <div className="language-switcher" style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
-      <Link 
-        href={pathname} 
-        locale="ko" 
-        style={{ 
-          fontSize: '0.875rem', 
-          fontWeight: locale === 'ko' ? 'bold' : 'normal',
-          color: locale === 'ko' ? 'var(--accent)' : 'var(--text-secondary)',
-          textDecoration: 'none',
-          padding: '0.25rem'
-        }}
+    <div className="flex gap-2 items-center">
+      <Link
+        href={pathname}
+        locale="ko"
+        className={`text-sm no-underline p-1 ${locale === 'ko' ? 'font-bold text-accent' : 'font-normal text-text-secondary'}`}
       >
         KO
       </Link>
-      <span style={{ color: 'var(--border)' }}>|</span>
-      <Link 
-        href={pathname} 
-        locale="en" 
-        style={{ 
-          fontSize: '0.875rem', 
-          fontWeight: locale === 'en' ? 'bold' : 'normal',
-          color: locale === 'en' ? 'var(--accent)' : 'var(--text-secondary)',
-          textDecoration: 'none',
-          padding: '0.25rem'
-        }}
+      <span className="text-border">|</span>
+      <Link
+        href={pathname}
+        locale="en"
+        className={`text-sm no-underline p-1 ${locale === 'en' ? 'font-bold text-accent' : 'font-normal text-text-secondary'}`}
       >
         EN
       </Link>
