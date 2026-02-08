@@ -1,4 +1,31 @@
 /**
+ * 키보드 OS 타입 (키 레이블 표시용)
+ */
+export type KeyboardOS = 'windows' | 'mac';
+
+/**
+ * Mac OS 키 레이블 오버라이드 맵 (code → Mac 레이블)
+ */
+export const macKeyLabels: Record<string, string> = {
+  MetaLeft: '⌘',
+  MetaRight: '⌘',
+  AltLeft: '⌥',
+  AltRight: '⌥',
+  Backspace: '⌫',
+  Enter: 'Return',
+};
+
+/**
+ * OS에 따른 키 레이블 반환
+ */
+export function getKeyLabel(code: string, defaultLabel: string, os: KeyboardOS): string {
+  if (os === 'mac' && code in macKeyLabels) {
+    return macKeyLabels[code];
+  }
+  return defaultLabel;
+}
+
+/**
  * 키보드 레이아웃의 개별 키 정의
  */
 export interface LayoutKey {

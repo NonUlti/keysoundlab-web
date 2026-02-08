@@ -13,5 +13,5 @@ export type { KeyType } from './KeyType';
 export type { KeyEvent, KeyState, KeyboardMapping } from './types';
 
 // Layout
-export { tklLayout } from './layouts';
-export type { LayoutKey, LayoutRow, KeyboardLayout } from './layouts';
+export { tklLayout, getKeyLabel, macKeyLabels } from './layouts';
+export type { LayoutKey, LayoutRow, KeyboardLayout, KeyboardOS } from './layouts';
