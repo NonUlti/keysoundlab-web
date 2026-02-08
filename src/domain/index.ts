@@ -14,7 +14,12 @@ export type {
   KeyEvent,
   KeyState,
   KeyboardMapping,
+  LayoutKey,
+  LayoutRow,
+  KeyboardLayout,
 } from './keyboard';
+
+export { tklLayout } from './keyboard';
 
 // Switch
 export {
@@ -34,5 +39,7 @@ export type {
   SwitchType,
   SwitchFilter,
   SoundMapping,
+  SwitchSortField,
+  SortOrder,
   ISwitchAdapter,
 } from './switch';

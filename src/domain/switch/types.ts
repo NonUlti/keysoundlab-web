@@ -37,6 +37,16 @@ export interface Switch {
 }
 
 /**
+ * 정렬 기준 필드
+ */
+export type SwitchSortField = 'name' | 'manufacturer' | 'actuationForce' | 'type';
+
+/**
+ * 정렬 방향
+ */
+export type SortOrder = 'asc' | 'desc';
+
+/**
  * 스위치 필터 조건
  */
 export interface SwitchFilter {
@@ -45,4 +55,6 @@ export interface SwitchFilter {
   minActuationForce?: number;
   maxActuationForce?: number;
   searchQuery?: string;
+  sortBy?: SwitchSortField;
+  sortOrder?: SortOrder;
 }

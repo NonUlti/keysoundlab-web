@@ -11,3 +11,7 @@ export { getKeyType } from './KeyType';
 export type { KeyType } from './KeyType';
 
 export type { KeyEvent, KeyState, KeyboardMapping } from './types';
+
+// Layout
+export { tklLayout } from './layouts';
+export type { LayoutKey, LayoutRow, KeyboardLayout } from './layouts';

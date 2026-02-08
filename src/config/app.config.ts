@@ -17,6 +17,8 @@ export const appConfig = {
    */
   dataSource: {
     switchesUrl: '/data/switches.json',
+    switchesApiUrl: '/api/switches',
+    soundsApiUrl: '/api/sounds',
     soundsBaseUrl: '/sounds',
   },
 

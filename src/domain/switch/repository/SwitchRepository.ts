@@ -1,5 +1,4 @@
-import type { Switch } from '../types';
-import type { SwitchFilter } from '../types';
+import type { Switch, SwitchFilter } from '../types';
 
 /**
  * 스위치 데이터 어댑터 인터페이스
@@ -51,12 +50,12 @@ export class SwitchRepository {
   }
 
   /**
-   * 필터 조건으로 스위치 검색
+   * 필터 조건으로 스위치 검색 (정렬 포함)
    */
   public async findByFilter(filter: SwitchFilter): Promise<Switch[]> {
     const allSwitches = await this.getAll();
 
-    return allSwitches.filter(sw => {
+    let filtered = allSwitches.filter(sw => {
       // 타입 필터
       if (filter.type && sw.type !== filter.type) {
         return false;
@@ -96,6 +95,28 @@ export class SwitchRepository {
 
       return true;
     });
+
+    // 정렬
+    if (filter.sortBy) {
+      const order = filter.sortOrder === 'desc' ? -1 : 1;
+
+      filtered = [...filtered].sort((a, b) => {
+        switch (filter.sortBy) {
+          case 'name':
+            return a.name.localeCompare(b.name) * order;
+          case 'manufacturer':
+            return a.manufacturer.localeCompare(b.manufacturer) * order;
+          case 'actuationForce':
+            return (a.actuationForce - b.actuationForce) * order;
+          case 'type':
+            return a.type.localeCompare(b.type) * order;
+          default:
+            return 0;
+        }
+      });
+    }
+
+    return filtered;
   }
 
   /**

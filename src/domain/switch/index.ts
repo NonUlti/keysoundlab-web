@@ -1,5 +1,5 @@
 // Types
-export type { Switch, SwitchType, SwitchFilter, SoundMapping } from './types';
+export type { Switch, SwitchType, SwitchFilter, SoundMapping, SwitchSortField, SortOrder } from './types';
 
 // Models
 export {

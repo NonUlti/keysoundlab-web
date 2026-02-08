@@ -1,21 +1,47 @@
 import type { ISoundLoader, LoadResult, LoadProgress } from './types';
+import type { BrowserSoundCache } from '../cache/BrowserSoundCache';
 import { createLogger } from '@/shared/utils/logger';
 
 const logger = createLogger('SoundLoader');
 
+interface SoundLoaderOptions {
+  browserCache?: BrowserSoundCache;
+}
+
 /**
  * 사운드 로더 생성
+ * browserCache 옵션으로 Cache API 기반 브라우저 캐싱 활성화 가능
  */
-export const createSoundLoader = (context: AudioContext): ISoundLoader => {
+export const createSoundLoader = (
+  context: AudioContext,
+  options: SoundLoaderOptions = {}
+): ISoundLoader => {
+  const { browserCache } = options;
   const progressCallbacks = new Map<string, (progress: LoadProgress) => void>();
 
   const load = async (id: string, url: string): Promise<LoadResult> => {
     try {
+      // 1. 브라우저 캐시 확인
+      if (browserCache) {
+        const cachedData = await browserCache.get(url);
+        if (cachedData) {
+          logger.info(`Browser cache hit: ${id}`);
+          const buffer = await context.decodeAudioData(cachedData);
+          return { id, buffer, url };
+        }
+      }
+
+      // 2. 네트워크에서 fetch
       logger.info(`Loading sound: ${id} from ${url}`);
       const response = await fetch(url);
 
       if (!response.ok) {
         throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+      }
+
+      // 3. 브라우저 캐시에 저장 (Response를 clone하여 저장)
+      if (browserCache) {
+        await browserCache.put(url, response.clone());
       }
 
       const contentLength = response.headers.get('content-length');
