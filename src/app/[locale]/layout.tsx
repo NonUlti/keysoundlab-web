@@ -20,9 +20,44 @@ export async function generateMetadata(): Promise<Metadata> {
   const messages = await getMessages();
   const common = messages[NAMESPACES.COMMON] as Record<string, Record<string, string>>;
 
+  const title = common?.metadata?.title || 'KeySoundLab';
+  const description =
+    common?.metadata?.description ||
+    'Keyboard switch sound testing web application';
+
   return {
-    title: common?.metadata?.title || 'KeySoundLab',
-    description: common?.metadata?.description || '',
+    title,
+    description,
+    keywords: [
+      'keyboard',
+      'mechanical keyboard',
+      'switch',
+      'sound test',
+      'Cherry MX',
+      'Gateron',
+      'Kailh',
+      'typing sound',
+      '키보드',
+      '기계식 키보드',
+      '스위치',
+      '타건',
+      '타건음',
+    ],
+    openGraph: {
+      title,
+      description,
+      type: 'website',
+      siteName: 'KeySoundLab',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+    },
+    robots: {
+      index: true,
+      follow: true,
+    },
   };
 }
 

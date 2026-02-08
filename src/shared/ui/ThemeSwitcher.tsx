@@ -27,7 +27,7 @@ export default function ThemeSwitcher() {
   return (
     <button
       onClick={toggleTheme}
-      className="p-2 rounded-lg bg-transparent border-none cursor-pointer transition-colors text-text-secondary flex items-center justify-center hover:text-text-primary hover:bg-black/5 dark:hover:bg-white/10"
+      className="p-2 rounded-lg bg-transparent border-none cursor-pointer transition-colors text-text-secondary flex items-center justify-center hover:text-text-primary hover:bg-black/5 dark:hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
       aria-label="Toggle theme"
     >
       {resolvedTheme === 'dark' ? (

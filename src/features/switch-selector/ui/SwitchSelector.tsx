@@ -34,35 +34,35 @@ export function SwitchSelector({
 
   if (loading && switches.length === 0) {
     return (
-      <div className="flex flex-col gap-3">
-        <h2 className="text-sm font-semibold text-text-primary">{t('switch.title')}</h2>
-        <p className="text-xs text-text-secondary">{t('switch.loading')}</p>
+      <div className="flex flex-col gap-3" role="region" aria-label={t('switch.title')}>
+        <h2 className="text-sm font-semibold text-text-primary pb-2 border-b border-border">{t('switch.title')}</h2>
+        <p className="text-sm text-text-secondary">{t('switch.loading')}</p>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="flex flex-col gap-3">
-        <h2 className="text-sm font-semibold text-text-primary">{t('switch.title')}</h2>
-        <p className="text-xs text-[rgb(var(--error-rgb))]">{t('switch.error')} {error.message}</p>
+      <div className="flex flex-col gap-3" role="region" aria-label={t('switch.title')}>
+        <h2 className="text-sm font-semibold text-text-primary pb-2 border-b border-border">{t('switch.title')}</h2>
+        <p className="text-sm text-[rgb(var(--error-rgb))]">{t('switch.error')} {error.message}</p>
       </div>
     );
   }
 
   return (
-    <div className="flex flex-col gap-3">
-      <h2 className="text-sm font-semibold text-text-primary">{t('switch.title')}</h2>
+    <div className="flex flex-col gap-3" role="region" aria-label={t('switch.title')}>
+      <h2 className="text-sm font-semibold text-text-primary pb-2 border-b border-border">{t('switch.title')}</h2>
 
       <SwitchFilters onFilterChange={setFilter} manufacturers={manufacturers} />
 
-      <p className="text-xs text-text-secondary">
+      <p className="text-xs text-text-secondary pt-1 border-t border-border">
         {t('filter.resultCount', { count: switches.length })}
       </p>
 
       <ul className="flex flex-col gap-1.5" aria-label={t('switch.title')}>
         {switches.length === 0 ? (
-          <li className="py-4 text-center text-xs text-text-secondary">
+          <li className="py-4 text-center text-sm text-text-secondary">
             {t('switch.noResults')}
           </li>
         ) : (

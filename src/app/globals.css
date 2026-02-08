@@ -19,7 +19,7 @@
   --bg-primary: #ffffff;
   --bg-secondary: #f8f9fa;
   --text-primary: #1a1a1a;
-  --text-secondary: #666666;
+  --text-secondary: #595959;
   --accent: #2563eb;
   --accent-rgb: 37, 99, 235;
   --accent-gradient: #7c3aed;
@@ -58,10 +58,28 @@ body.theme-transition {
 
 /* 키보드 레이아웃 전용 CSS (calc 표현식 — Tailwind로 변환 불가) */
 .keyboard-display {
-  --key-unit: 42px;
-  --key-gap: 3px;
-  --section-gap: 6px;
-  --row-gap: 3px;
+  --key-unit: 32px;
+  --key-gap: 2px;
+  --section-gap: 4px;
+  --row-gap: 2px;
+}
+
+@media (min-width: 768px) {
+  .keyboard-display {
+    --key-unit: 38px;
+    --key-gap: 3px;
+    --section-gap: 5px;
+    --row-gap: 3px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .keyboard-display {
+    --key-unit: 42px;
+    --key-gap: 3px;
+    --section-gap: 6px;
+    --row-gap: 3px;
+  }
 }
 
 .key {

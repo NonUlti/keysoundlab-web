@@ -54,13 +54,13 @@ export function SwitchFilters({ onFilterChange, manufacturers = [] }: SwitchFilt
           placeholder={t('filter.search')}
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className="w-full py-2 px-2.5 pr-7 bg-primary border border-border rounded text-text-primary text-xs placeholder:text-text-secondary focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+          className="w-full h-9 px-2.5 pr-7 bg-primary border border-border rounded-md text-text-primary text-sm placeholder:text-text-secondary focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
         />
         {searchQuery && (
           <button
             type="button"
             onClick={() => setSearchQuery('')}
-            className="absolute right-2 top-1/2 -translate-y-1/2 text-text-secondary hover:text-text-primary text-sm leading-none"
+            className="absolute right-1 top-1/2 -translate-y-1/2 w-7 h-7 flex items-center justify-center text-text-secondary hover:text-text-primary text-sm leading-none rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
             aria-label={t('filter.clearSearch')}
           >
             &times;
@@ -72,7 +72,8 @@ export function SwitchFilters({ onFilterChange, manufacturers = [] }: SwitchFilt
         <select
           value={selectedType ?? ''}
           onChange={(e) => setSelectedType((e.target.value as SwitchType) || undefined)}
-          className="flex-1 min-w-0 py-2 px-2 bg-primary border border-border rounded text-text-primary text-xs cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+          className="flex-1 min-w-0 h-9 px-2 bg-primary border border-border rounded-md text-text-primary text-sm cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+          aria-label={t('filter.allTypes')}
         >
           <option value="">{t('filter.allTypes')}</option>
           <option value="linear">{t('filter.linear')}</option>
@@ -83,7 +84,8 @@ export function SwitchFilters({ onFilterChange, manufacturers = [] }: SwitchFilt
         <select
           value={selectedManufacturer ?? ''}
           onChange={(e) => setSelectedManufacturer(e.target.value || undefined)}
-          className="flex-1 min-w-0 py-2 px-2 bg-primary border border-border rounded text-text-primary text-xs cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+          className="flex-1 min-w-0 h-9 px-2 bg-primary border border-border rounded-md text-text-primary text-sm cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+          aria-label={t('filter.allManufacturers')}
         >
           <option value="">{t('filter.allManufacturers')}</option>
           {manufacturers.map((manufacturer) => (
@@ -98,7 +100,7 @@ export function SwitchFilters({ onFilterChange, manufacturers = [] }: SwitchFilt
         <button
           type="button"
           onClick={handleReset}
-          className="self-start py-1 px-2 text-xs text-text-secondary hover:text-text-primary transition-colors"
+          className="self-start py-1.5 px-2.5 text-xs text-text-secondary hover:text-text-primary transition-colors rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
         >
           {t('filter.reset')}
         </button>

@@ -22,19 +22,20 @@ export function Navigation() {
   const pathname = usePathname();
 
   return (
-    <nav className="flex items-center">
-      <ul className="flex list-none gap-2">
+    <nav className="flex items-center min-w-0" aria-label="Main navigation">
+      <ul className="flex list-none gap-1 md:gap-2 whitespace-nowrap">
         {navItems.map((item) => {
           const isActive = pathname === item.href;
           return (
             <li key={item.href} className="relative">
               <Link
                 href={item.href}
-                className={`block py-2 px-4 no-underline font-medium rounded-md transition-all ${
+                className={`block py-2 px-3 md:px-4 no-underline text-sm md:text-base font-medium rounded-md transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent ${
                   isActive
                     ? 'text-accent bg-[rgba(var(--accent-rgb),0.1)] after:content-[\'\'] after:absolute after:-bottom-2 after:left-1/2 after:-translate-x-1/2 after:w-6 after:h-[3px] after:bg-accent after:rounded-sm'
                     : 'text-text-secondary hover:text-text-primary hover:bg-white/5'
                 }`}
+                aria-current={isActive ? 'page' : undefined}
               >
                 {t(item.labelKey)}
               </Link>
