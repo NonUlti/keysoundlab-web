@@ -1,15 +1,17 @@
 'use client';
 
-import React, { useState, useCallback, useMemo } from 'react';
+import React, { useState, useCallback, useEffect, useMemo, useRef } from 'react';
 import { useTranslations } from 'next-intl';
 import { Header } from '@/shared/ui';
 import { SwitchSelector, useSwitchSelection } from '@/features/switch-selector';
 import { KeyboardDisplay, useKeyboardVisualization } from '@/features/keyboard-display';
-import { SoundControls, useSoundEngine, useSoundPreload } from '@/features/sound-controller';
+import { SoundControls, WaveformVisualizer, useSoundEngine, useSoundPreload } from '@/features/sound-controller';
 import { useKeyboardInput } from '@/features/workspace/hooks/useKeyboardInput';
+import { OnboardingGuide } from '@/features/workspace/ui/OnboardingGuide';
 import { SwitchRepository } from '@/domain/switch/repository/SwitchRepository';
 import { LocalSwitchAdapter } from '@/domain/switch/repository/adapters/LocalSwitchAdapter';
 import { appConfig } from '@/config/app.config';
+import { createKeyboardMapper } from '@/domain';
 import { createLogger } from '@/shared/utils/logger';
 import { NAMESPACES } from '@/i18n/constants';
 
@@ -21,6 +23,9 @@ const logger = createLogger('SoundTestPage');
 export default function SoundTestPage() {
   const t = useTranslations(NAMESPACES.SOUND_TEST);
 
+  // 모바일 사이드바 상태
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
   // 스위치 리포지토리 초기화
   const [repository] = useState(
     () => new SwitchRepository(new LocalSwitchAdapter(appConfig.dataSource.switchesUrl))
@@ -30,11 +35,12 @@ export default function SoundTestPage() {
   const { selectedSwitch, selectSwitch: originalSelectSwitch } = useSwitchSelection();
 
   // 오디오 엔진
-  const { isReady, playSound, setVolume, resume, engine } = useSoundEngine();
+  const { isReady, playSound, setVolume, resume, engine, analyserNode } = useSoundEngine();
 
   // 스위치 선택 시 오디오 컨텍스트 자동 재개
   const selectSwitch = useCallback(async (sw: Parameters<typeof originalSelectSwitch>[0]) => {
     originalSelectSwitch(sw);
+    setSidebarOpen(false);
     if (!isReady && engine) {
       logger.info('Auto-resuming audio on switch selection');
       await resume();
@@ -47,6 +53,9 @@ export default function SoundTestPage() {
     handleKeyPress,
     handleKeyRelease,
   } = useKeyboardVisualization();
+
+  // 마우스 클릭용 키보드 매퍼
+  const mouseMapperRef = useRef(createKeyboardMapper());
 
   // 사운드 프리로드 (선택된 스위치만)
   const switchesToLoad = useMemo(() => {
@@ -103,30 +112,55 @@ export default function SoundTestPage() {
     handleKeyRelease(keyCode);
   }, [handleKeyRelease]);
 
+  // 마우스 매퍼에 선택된 스위치 동기화
+  useEffect(() => {
+    mouseMapperRef.current.setCurrentSwitch(selectedSwitch ?? null);
+  }, [selectedSwitch]);
+
+  // 마우스 클릭 이벤트 핸들러
+  const handleKeyMouseDown = useCallback((code: string) => {
+    const soundId = mouseMapperRef.current.mapKeyToSound(code);
+    handleKeyPressCallback(code, soundId);
+  }, [handleKeyPressCallback]);
+
+  const handleKeyMouseUp = useCallback((code: string) => {
+    handleKeyReleaseCallback(code);
+  }, [handleKeyReleaseCallback]);
+
   useKeyboardInput({
     currentSwitch: selectedSwitch ?? null,
     onKeyPress: handleKeyPressCallback,
     onKeyRelease: handleKeyReleaseCallback,
   });
 
-  // 오디오 컨텍스트 재개 (사용자 제스처 필요)
-  const handleInitAudio = async () => {
-    await resume();
-  };
-
   return (
     <div className="min-h-screen flex flex-col">
-      <Header
-        rightContent={
-          <SoundControls
-            volume={0.8}
-            onVolumeChange={setVolume}
-          />
-        }
-      />
+      {/* 온보딩 가이드 (최초 방문 시) */}
+      <OnboardingGuide onComplete={() => {}} />
 
-      <div className="flex-1 flex overflow-hidden">
-        <aside className="w-60 bg-secondary border-r border-border overflow-y-auto p-3 shrink-0">
+      <Header />
+
+      {/* 모바일: 스위치 선택 버튼 (lg 이하에서 표시) */}
+      <div className="lg:hidden flex items-center gap-2 px-4 py-2 bg-secondary border-b border-border">
+        <button
+          type="button"
+          onClick={() => setSidebarOpen(!sidebarOpen)}
+          className="flex items-center gap-2 py-2 px-3 text-sm font-medium bg-primary border border-border rounded-lg hover:border-accent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M8 6h13" /><path d="M8 12h13" /><path d="M8 18h13" />
+            <path d="M3 6h.01" /><path d="M3 12h.01" /><path d="M3 18h.01" />
+          </svg>
+          {sidebarOpen ? t('mobileSwitch.close') : t('mobileSwitch.open')}
+        </button>
+        {selectedSwitch && (
+          <span className="text-sm text-accent font-semibold truncate">{selectedSwitch.name}</span>
+        )}
+      </div>
+
+      <div className="flex-1 flex flex-col lg:flex-row overflow-hidden">
+        {/* 사이드바: 데스크톱에서 항상 표시, 모바일에서 토글 */}
+        <aside className={`${sidebarOpen ? 'block' : 'hidden'} lg:block w-full lg:w-64 bg-secondary border-b lg:border-b-0 lg:border-r border-border overflow-y-auto p-3 shrink-0 max-h-[50vh] lg:max-h-none`}>
           <SwitchSelector
             repository={repository}
             selectedSwitch={selectedSwitch}
@@ -134,39 +168,44 @@ export default function SoundTestPage() {
           />
         </aside>
 
-        <main className="flex-1 py-6 px-8 overflow-y-auto flex flex-col">
-          <div className="flex items-center gap-4 mb-4 flex-wrap">
-            {!isReady && (
-              <button
-                onClick={handleInitAudio}
-                className="py-2 px-4 text-sm bg-accent text-white border-none rounded cursor-pointer transition-opacity hover:opacity-80"
-              >
-                {t('audio.start')}
-              </button>
-            )}
+        <main className="flex-1 py-4 px-4 md:py-6 md:px-8 overflow-y-auto flex flex-col">
+          <div className="flex items-center gap-3 md:gap-4 mb-4 flex-wrap">
+            <div className="flex items-center gap-2 py-2 px-3 md:px-4 bg-secondary rounded-md border border-border">
+              {selectedSwitch ? (
+                <>
+                  <span className="text-xs text-text-secondary">{t('status.selected')}</span>
+                  <span className="text-sm font-semibold text-accent">{selectedSwitch.name}</span>
+                  {soundLoading && <span className="text-xs text-text-secondary animate-[pulse_1.5s_infinite]">{t('status.loading')}</span>}
+                </>
+              ) : (
+                <span className="text-sm text-text-secondary">{t('status.selectSwitch')}</span>
+              )}
+            </div>
 
-            {selectedSwitch && (
-              <div className="flex items-center gap-2 py-2 px-4 bg-secondary rounded-md border border-border">
-                <span className="text-xs text-text-secondary">{t('status.selected')}</span>
-                <span className="text-sm font-semibold text-accent">{selectedSwitch.name}</span>
-                {soundLoading && <span className="text-xs text-text-secondary animate-[pulse_1.5s_infinite]">{t('status.loading')}</span>}
-              </div>
-            )}
+            <div className="ml-auto">
+              <SoundControls
+                volume={0.8}
+                onVolumeChange={setVolume}
+              />
+            </div>
 
             {soundError && (
-              <div className="py-2 px-4 bg-[rgba(var(--error-rgb),0.1)] border border-[rgb(var(--error-rgb))] rounded-md text-[rgb(var(--error-rgb))] text-[13px]">
+              <div className="py-2 px-3 md:px-4 bg-[rgba(var(--error-rgb),0.1)] border border-[rgb(var(--error-rgb))] rounded-md text-[rgb(var(--error-rgb))] text-sm">
                 {t('status.soundError')} {soundError.message}
               </div>
             )}
           </div>
 
-          {!selectedSwitch && !soundLoading && !soundError && (
-            <div className="flex items-center justify-center p-8 text-text-secondary text-sm bg-secondary rounded-lg border border-dashed border-border mb-4">
-              {t('status.selectSwitch')}
+          <div className="overflow-x-auto">
+            <KeyboardDisplay pressedKeys={pressedKeys} onKeyMouseDown={handleKeyMouseDown} onKeyMouseUp={handleKeyMouseUp} />
+          </div>
+
+          {/* 파형 시각화 */}
+          {isReady && selectedSwitch && (
+            <div className="mt-4">
+              <WaveformVisualizer analyserNode={analyserNode} isActive={isReady} />
             </div>
           )}
-
-          <KeyboardDisplay pressedKeys={pressedKeys} />
         </main>
       </div>
     </div>
