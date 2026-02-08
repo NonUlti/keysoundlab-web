@@ -57,5 +57,10 @@
   "mobileSwitch": {
     "open": "Select Switch",
     "close": "Close"
+  },
+  "keyboard": {
+    "os": "Keyboard OS",
+    "windows": "Win",
+    "mac": "Mac"
   }
 }

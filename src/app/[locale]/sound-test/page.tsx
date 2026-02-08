@@ -12,6 +12,7 @@ import { SwitchRepository } from '@/domain/switch/repository/SwitchRepository';
 import { LocalSwitchAdapter } from '@/domain/switch/repository/adapters/LocalSwitchAdapter';
 import { appConfig } from '@/config/app.config';
 import { createKeyboardMapper } from '@/domain';
+import type { KeyboardOS } from '@/domain/keyboard';
 import { createLogger } from '@/shared/utils/logger';
 import { NAMESPACES } from '@/i18n/constants';
 
@@ -25,6 +26,21 @@ export default function SoundTestPage() {
 
   // 모바일 사이드바 상태
   const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  // 키보드 OS 상태 (키 레이블 표시용)
+  const [keyboardOS, setKeyboardOS] = useState<KeyboardOS>('windows');
+  useEffect(() => {
+    const saved = localStorage.getItem('keyboard-os');
+    if (saved === 'windows' || saved === 'mac') {
+      setKeyboardOS(saved);
+    } else if (/Mac|iPhone|iPad/.test(navigator.platform)) {
+      setKeyboardOS('mac');
+    }
+  }, []);
+  const handleKeyboardOSChange = useCallback((os: KeyboardOS) => {
+    setKeyboardOS(os);
+    localStorage.setItem('keyboard-os', os);
+  }, []);
 
   // 스위치 리포지토리 초기화
   const [repository] = useState(
@@ -169,43 +185,65 @@ export default function SoundTestPage() {
         </aside>
 
         <main className="flex-1 py-4 px-4 md:py-6 md:px-8 overflow-y-auto flex flex-col">
-          <div className="flex items-center gap-3 md:gap-4 mb-4 flex-wrap">
-            <div className="flex items-center gap-2 py-2 px-3 md:px-4 bg-secondary rounded-md border border-border">
-              {selectedSwitch ? (
-                <>
-                  <span className="text-xs text-text-secondary">{t('status.selected')}</span>
-                  <span className="text-sm font-semibold text-accent">{selectedSwitch.name}</span>
-                  {soundLoading && <span className="text-xs text-text-secondary animate-[pulse_1.5s_infinite]">{t('status.loading')}</span>}
-                </>
-              ) : (
-                <span className="text-sm text-text-secondary">{t('status.selectSwitch')}</span>
+          <div className="overflow-x-auto">
+            <div className="w-fit mx-auto">
+              <div className="flex items-center gap-3 md:gap-4 mb-4 flex-wrap">
+                <div className="flex items-center gap-2 py-2 px-3 md:px-4 bg-secondary rounded-md border border-border">
+                  {selectedSwitch ? (
+                    <>
+                      <span className="text-xs text-text-secondary">{t('status.selected')}</span>
+                      <span className="text-sm font-semibold text-accent">{selectedSwitch.name}</span>
+                      {soundLoading && <span className="text-xs text-text-secondary animate-[pulse_1.5s_infinite]">{t('status.loading')}</span>}
+                    </>
+                  ) : (
+                    <span className="text-sm text-text-secondary">{t('status.selectSwitch')}</span>
+                  )}
+                </div>
+
+                <div className="flex gap-2 items-center" role="group" aria-label={t('keyboard.os')}>
+                  <button
+                    type="button"
+                    onClick={() => handleKeyboardOSChange('windows')}
+                    className={`text-sm p-1.5 rounded-md transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent ${keyboardOS === 'windows' ? 'font-bold text-accent' : 'font-normal text-text-secondary hover:text-text-primary'}`}
+                    aria-current={keyboardOS === 'windows' ? 'true' : undefined}
+                  >
+                    {t('keyboard.windows')}
+                  </button>
+                  <span className="text-border" aria-hidden="true">|</span>
+                  <button
+                    type="button"
+                    onClick={() => handleKeyboardOSChange('mac')}
+                    className={`text-sm p-1.5 rounded-md transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent ${keyboardOS === 'mac' ? 'font-bold text-accent' : 'font-normal text-text-secondary hover:text-text-primary'}`}
+                    aria-current={keyboardOS === 'mac' ? 'true' : undefined}
+                  >
+                    {t('keyboard.mac')}
+                  </button>
+                </div>
+
+                <div className="ml-auto">
+                  <SoundControls
+                    volume={0.8}
+                    onVolumeChange={setVolume}
+                  />
+                </div>
+
+                {soundError && (
+                  <div className="py-2 px-3 md:px-4 bg-[rgba(var(--error-rgb),0.1)] border border-[rgb(var(--error-rgb))] rounded-md text-[rgb(var(--error-rgb))] text-sm">
+                    {t('status.soundError')} {soundError.message}
+                  </div>
+                )}
+              </div>
+
+              <KeyboardDisplay pressedKeys={pressedKeys} onKeyMouseDown={handleKeyMouseDown} onKeyMouseUp={handleKeyMouseUp} os={keyboardOS} />
+
+              {/* 파형 시각화 */}
+              {isReady && selectedSwitch && (
+                <div className="mt-4">
+                  <WaveformVisualizer analyserNode={analyserNode} isActive={isReady} />
+                </div>
               )}
             </div>
-
-            <div className="ml-auto">
-              <SoundControls
-                volume={0.8}
-                onVolumeChange={setVolume}
-              />
-            </div>
-
-            {soundError && (
-              <div className="py-2 px-3 md:px-4 bg-[rgba(var(--error-rgb),0.1)] border border-[rgb(var(--error-rgb))] rounded-md text-[rgb(var(--error-rgb))] text-sm">
-                {t('status.soundError')} {soundError.message}
-              </div>
-            )}
           </div>
-
-          <div className="overflow-x-auto">
-            <KeyboardDisplay pressedKeys={pressedKeys} onKeyMouseDown={handleKeyMouseDown} onKeyMouseUp={handleKeyMouseUp} />
-          </div>
-
-          {/* 파형 시각화 */}
-          {isReady && selectedSwitch && (
-            <div className="mt-4">
-              <WaveformVisualizer analyserNode={analyserNode} isActive={isReady} />
-            </div>
-          )}
         </main>
       </div>
     </div>
