@@ -25,9 +25,37 @@
     "clearSearch": "검색어 지우기",
     "resultCount": "{count}개의 스위치"
   },
+  "switchType": {
+    "linear": "리니어",
+    "tactile": "택타일",
+    "clicky": "클릭키"
+  },
   "volume": {
     "label": "볼륨",
     "mute": "음소거",
     "unmute": "음소거 해제"
+  },
+  "onboarding": {
+    "step1": {
+      "title": "스위치를 선택하세요",
+      "description": "사이드바에서 테스트하고 싶은 키보드 스위치를 골라보세요."
+    },
+    "step2": {
+      "title": "오디오가 자동으로 시작됩니다",
+      "description": "스위치를 선택하면 오디오가 자동으로 활성화됩니다. 활성화되지 않으면 버튼을 클릭하세요."
+    },
+    "step3": {
+      "title": "키보드를 타이핑하세요",
+      "description": "물리 키보드를 입력하면 선택한 스위치의 소리가 실시간으로 재생됩니다."
+    },
+    "next": "다음",
+    "prev": "이전",
+    "finish": "시작하기",
+    "skip": "건너뛰기",
+    "stepOf": "{current} / {total}"
+  },
+  "mobileSwitch": {
+    "open": "스위치 선택",
+    "close": "닫기"
   }
 }

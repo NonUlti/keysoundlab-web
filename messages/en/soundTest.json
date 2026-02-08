@@ -25,9 +25,37 @@
     "clearSearch": "Clear search",
     "resultCount": "{count} switches"
   },
+  "switchType": {
+    "linear": "Linear",
+    "tactile": "Tactile",
+    "clicky": "Clicky"
+  },
   "volume": {
     "label": "Volume",
     "mute": "Mute",
     "unmute": "Unmute"
+  },
+  "onboarding": {
+    "step1": {
+      "title": "Select a Switch",
+      "description": "Choose a keyboard switch from the sidebar to test its sound."
+    },
+    "step2": {
+      "title": "Audio Activates Automatically",
+      "description": "Audio will start when you select a switch. If not, click the Start Audio button."
+    },
+    "step3": {
+      "title": "Start Typing",
+      "description": "Type on your physical keyboard to hear the selected switch sound in real-time."
+    },
+    "next": "Next",
+    "prev": "Back",
+    "finish": "Get Started",
+    "skip": "Skip",
+    "stepOf": "{current} / {total}"
+  },
+  "mobileSwitch": {
+    "open": "Select Switch",
+    "close": "Close"
   }
 }
