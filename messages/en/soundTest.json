@@ -9,6 +9,7 @@
     "selectSwitch": "Select a switch from the left"
   },
   "switch": {
+    "title": "Switch Selection",
     "loading": "Loading switch list...",
     "error": "Error:",
     "noResults": "No results found."
@@ -16,7 +17,13 @@
   "filter": {
     "search": "Search switches...",
     "allTypes": "All Types",
-    "allManufacturers": "All Manufacturers"
+    "allManufacturers": "All Manufacturers",
+    "linear": "Linear",
+    "tactile": "Tactile",
+    "clicky": "Clicky",
+    "reset": "Reset filters",
+    "clearSearch": "Clear search",
+    "resultCount": "{count} switches"
   },
   "volume": {
     "label": "Volume",

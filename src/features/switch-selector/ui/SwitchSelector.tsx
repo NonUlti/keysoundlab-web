@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 import { NAMESPACES } from '@/i18n/constants';
 import type { Switch, SwitchFilter } from '@/domain/switch/types';
@@ -25,34 +25,58 @@ export function SwitchSelector({
 }: SwitchSelectorProps) {
   const t = useTranslations(NAMESPACES.SOUND_TEST);
   const [filter, setFilter] = useState<SwitchFilter>({});
+  const [manufacturers, setManufacturers] = useState<string[]>([]);
   const { switches, loading, error } = useSwitchList(repository, filter);
 
-  if (loading) {
-    return <div>{t('switch.loading')}</div>;
+  useEffect(() => {
+    repository.getManufacturers().then(setManufacturers).catch(() => {});
+  }, [repository]);
+
+  if (loading && switches.length === 0) {
+    return (
+      <div className="flex flex-col gap-3">
+        <h2 className="text-sm font-semibold text-text-primary">{t('switch.title')}</h2>
+        <p className="text-xs text-text-secondary">{t('switch.loading')}</p>
+      </div>
+    );
   }
 
   if (error) {
-    return <div>{t('switch.error')} {error.message}</div>;
+    return (
+      <div className="flex flex-col gap-3">
+        <h2 className="text-sm font-semibold text-text-primary">{t('switch.title')}</h2>
+        <p className="text-xs text-[rgb(var(--error-rgb))]">{t('switch.error')} {error.message}</p>
+      </div>
+    );
   }
 
   return (
-    <div className="flex flex-col gap-2">
-      <SwitchFilters onFilterChange={setFilter} />
+    <div className="flex flex-col gap-3">
+      <h2 className="text-sm font-semibold text-text-primary">{t('switch.title')}</h2>
 
-      <div className="flex flex-col gap-1.5">
+      <SwitchFilters onFilterChange={setFilter} manufacturers={manufacturers} />
+
+      <p className="text-xs text-text-secondary">
+        {t('filter.resultCount', { count: switches.length })}
+      </p>
+
+      <ul className="flex flex-col gap-1.5" aria-label={t('switch.title')}>
         {switches.length === 0 ? (
-          <p>{t('switch.noResults')}</p>
+          <li className="py-4 text-center text-xs text-text-secondary">
+            {t('switch.noResults')}
+          </li>
         ) : (
           switches.map((switchItem) => (
-            <SwitchCard
-              key={switchItem.id}
-              switch={switchItem}
-              selected={selectedSwitch?.id === switchItem.id}
-              onSelect={onSelectSwitch}
-            />
+            <li key={switchItem.id}>
+              <SwitchCard
+                switch={switchItem}
+                selected={selectedSwitch?.id === switchItem.id}
+                onSelect={onSelectSwitch}
+              />
+            </li>
           ))
         )}
-      </div>
+      </ul>
     </div>
   );
 }

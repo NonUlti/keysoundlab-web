@@ -19,21 +19,23 @@ export const createKeyboardListener = (): KeyboardListener => {
   let onKeyUpCallback: ((event: KeyEvent) => void) | undefined;
   let isListening = false;
 
-  const isInputElement = (target: EventTarget | null): boolean => {
-    if (!target || !(target instanceof HTMLElement)) {
+  const isInteractiveFormElement = (): boolean => {
+    const el = document.activeElement;
+    if (!el || !(el instanceof HTMLElement)) {
       return false;
     }
 
-    const tagName = target.tagName.toLowerCase();
+    const tagName = el.tagName.toLowerCase();
     return (
       tagName === 'input' ||
       tagName === 'textarea' ||
-      target.isContentEditable
+      tagName === 'select' ||
+      el.isContentEditable
     );
   };
 
   const handleKeyDown = (e: KeyboardEvent): void => {
-    if (isInputElement(e.target)) {
+    if (isInteractiveFormElement()) {
       return;
     }
 
@@ -51,7 +53,7 @@ export const createKeyboardListener = (): KeyboardListener => {
   };
 
   const handleKeyUp = (e: KeyboardEvent): void => {
-    if (isInputElement(e.target)) {
+    if (isInteractiveFormElement()) {
       return;
     }
 
