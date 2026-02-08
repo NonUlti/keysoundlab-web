@@ -52,3 +52,18 @@ Clean Architecture 기반 계층 구조. 의존성 방향: UI → Features → D
 - 팩토리 함수 패턴: `createXxx()` (클래스 사용 지양)
 - barrel export: 각 모듈에 `index.ts`로 public API 정의
 - 컴포넌트: `'use client'` 지시어로 클라이언트/서버 컴포넌트 구분
+
+## 주의사항
+
+- **AudioContext 사용자 제스처 필수**: 브라우저 보안 정책으로 AudioContext는 `suspended` 상태로 시작. 스위치 선택 시/키 입력 시 자동 resume + "Start Audio" 버튼으로 처리
+- **macOS Meta 키 이슈**: Command 키 누른 채 다른 키 입력 시 keyup 이벤트 미발생. `useKeyboardInput`에서 Meta 키 해제 시 눌린 키 강제 해제 처리
+- **테마 플래시 방지**: `layout.tsx`에 인라인 blocking 스크립트로 React 하이드레이션 전에 `data-theme` 속성 설정. `suppressHydrationWarning` 필수
+- **사운드 파일 미포함**: `.gitignore`에 `/public/sounds/**/*.wav` 설정. 개발 시 WAV 파일을 별도로 준비해야 함
+- **URL 로케일 프리픽스 없음**: `localePrefix: 'never'` 설정으로 URL에 `/ko`, `/en` 미표시. 미들웨어가 자동 감지
+- **Tailwind CSS v4**: `@import "tailwindcss"` 사용 (`@tailwind` 아님). `@custom-variant dark`로 `data-theme` 기반 다크모드. `@tailwindcss/postcss` 플러그인만 사용 (autoprefixer 불필요)
+- **키보드 레이아웃 CSS**: `globals.css`에 `calc()` 기반 키 크기 계산 유지 (Tailwind 유틸리티로 변환 불가)
+
+## 환경 요구사항
+
+- Node.js 20.x
+- Yarn

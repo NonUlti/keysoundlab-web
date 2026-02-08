@@ -13,9 +13,16 @@
 
 ## 패턴
 
-- 모든 모듈이 `createXxx()` 팩토리 함수로 인스턴스 생성, 클로저로 내부 상태 캡슐화
+- 대부분 `createXxx()` 팩토리 함수로 인스턴스 생성, 클로저로 내부 상태 캡슐화
+- **예외**: `AudioEngine`은 싱글톤 클래스 (`AudioEngine.getInstance()`)
 - barrel export(`index.ts`)로 public API만 노출
 - 오디오 그래프 흐름: SourceNode → VolumeNode → CompressorNode → destination
+
+## 주의사항
+
+- VoicePool 최대 동시 발음: 32, SoundCache/LRU 최대: 50 항목
+- SoundCache 메모리 추적: `channels × samples × 4 bytes` (Float32)
+- VolumeNode를 `context.destination`에 연결하지 않으면 소리 미출력
 
 ## 관련 디렉토리
 

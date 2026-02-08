@@ -15,7 +15,14 @@
 
 - 팩토리 함수 + 클로저 패턴 (`createXxx()`)
 - Repository 패턴: `SwitchRepository` 인터페이스 + `ISwitchAdapter`로 데이터 소스 추상화
-- 키 타입별 사운드 매핑: `soundMapping` 설정으로 스페이스바/엔터 등 큰 키에 다른 사운드 지정
+- 키 타입별 사운드 매핑: `soundMapping` 설정으로 스페이스바/엔터 등 큰 키에 다른 사운드 지정. 매핑 없으면 첫 번째 사운드 파일을 기본값으로 사용
+
+## 주의사항
+
+- `KeyboardListener`는 `input`, `textarea`, `contentEditable` 요소의 이벤트를 자동 필터링 (폼 입력 시 사운드 미재생)
+- `KeyStateTracker`는 키 반복(repeat) 이벤트 방지 — 이미 눌린 키의 press 이벤트 무시
+- `SwitchRepository`는 별도 인메모리 `Map` 캐시로 스위치 데이터 캐싱 (사운드 캐시와 별개)
+- KeyType 6종: `default`, `spacebar`, `enter`, `shift`, `backspace`, `stabilizer` — 물리 키보드의 스태빌라이저 유무에 따라 분류
 
 ## 관련 디렉토리
 
